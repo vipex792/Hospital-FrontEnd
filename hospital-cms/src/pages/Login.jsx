@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react"; // ✅ Added React import
 import { useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import { fakeLogin } from "../services/dummyApi";
+import MyNavbar from "../components/MyNavbar"; // Optional: Add Navbar if you want
 
 function Login() {
   const navigate = useNavigate();
@@ -43,33 +44,36 @@ function Login() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 col-md-4 shadow">
-        <h4 className="text-center mb-3">Login</h4>
+    <>
+      {/* Optional: <MyNavbar /> */}
+      <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="card p-4 col-md-4 shadow">
+          <h4 className="text-center mb-3">Login</h4>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            className="form-control mb-2"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <form onSubmit={handleSubmit}>
+            <input
+              className="form-control mb-2"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <input
-            className="form-control mb-2"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <input
+              className="form-control mb-2"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <button className="btn btn-primary w-100">
-            Login
-          </button>
-        </form>
+            <button className="btn btn-primary w-100">
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
