@@ -8,7 +8,10 @@ function RegisterUser() {
         <input className="form-control mb-2" placeholder="First Name" />
         <input className="form-control mb-2" placeholder="Last Name" />
         <input className="form-control mb-2" placeholder="Email" />
-        <input className="form-control mb-2" type="password" placeholder="Password" />
+        <input className="form-control mb-2" placeholder="Mobile-Number"/>
+        <input className="form-control mb-2" placeholder="age"/>
+        <input className="form-control mb-2" type="password" placeholder="Password"/>
+        <input className="form-control mb-2" type="Password" placeholder="Confirm Password" />
 
         <div className="mb-2">
           <label className="me-3"><input type="radio" /> Male</label>

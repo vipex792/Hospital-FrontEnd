@@ -7,8 +7,9 @@ const AdminDashboard = () => {
   const adminCards = [
     { title: 'Add New Doctor', text: 'Register a new doctor to the database.', btn: 'ADD', bg: 'primary', icon: <FaUserMd size={50}/> },
     { title: 'View Doctor List', text: 'View details of all registered doctors.', btn: 'VIEW', bg: 'warning', icon: <FaList size={50}/> },
-    { title: 'Add New Donor', text: 'Add a new blood donor to the database.', btn: 'ADD', bg: 'info', icon: <FaHandHoldingHeart size={50}/> },
-    { title: 'Add Patient', text: 'Register a new patient manually.', btn: 'ADD', bg: 'success', icon: <FaUserInjured size={50}/> },
+    {title : 'View Patient List', text: 'View details of all registered patients.', btn: 'VIEW', bg: 'success', icon: <FaUserInjured size={50}/> },
+    {title: 'Remove Docotor', text: 'Remove a doctor from the database.', btn: 'REMOVE', bg: 'danger', icon: <FaHandHoldingHeart size={50}/> },
+    {title: 'View Appointments', text: 'Check all scheduled appointments.', btn: 'VIEW', bg: 'info', icon: <FaList size={50}/> },
   ];
 
   return (
