@@ -1,54 +1,87 @@
-import React, { useState } from "react"; // ✅ Added React import
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/auth.css";
-import { fakeLogin } from "../services/dummyApi";
-import MyNavbar from "../components/MyNavbar"; // Optional: Add Navbar if you want
+import { login } from "../services/authApi";
+// import MyNavbar from "../components/MyNavbar";
 
 function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!email || !password) {
-      alert("All fields are required");
+      setError("All fields are required");
       return;
     }
 
-    // Dummy API call
-    await fakeLogin();
+    try {
+      setLoading(true);
 
-    // 🔐 Decide role
-    let role = "patient";
-    let redirect = "/patient-dashboard";
+      // 🔐 Call backend API
+      const response = await login({
+        email: email,
+        password: password,
+      });
 
-    if (email.includes("admin")) {
-      role = "admin";
-      redirect = "/admin-dashboard";
-    } else if (email.includes("doctor")) {
-      role = "doctor";
-      redirect = "/doctor-dashboard";
+      /*
+        Expected backend response (example):
+        {
+          token: "...",
+          role: "Admin" | "Doctor" | "Patient",
+          email: "user@mail.com"
+        }
+      */
+
+      const { token, role } = response.data;
+
+      // ✅ Store token (used by Axios interceptor)
+      localStorage.setItem("token", token);
+
+      // ✅ Store user info (optional but useful)
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email, role })
+      );
+
+      // 🔀 Redirect based on role
+      if (role === "Admin") {
+        navigate("/admin-dashboard");
+      } else if (role === "Doctor") {
+        navigate("/doctor-dashboard");
+      } else {
+        navigate("/patient-dashboard");
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "Invalid email or password"
+      );
+    } finally {
+      setLoading(false);
     }
-
-    // ✅ Save login info (IMPORTANT)
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ email, role })
-    );
-
-    // ✅ React Router navigation
-    navigate(redirect);
   };
 
   return (
     <>
       {/* Optional: <MyNavbar /> */}
+
       <div className="container d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 col-md-4 shadow">
           <h4 className="text-center mb-3">Login</h4>
+
+          {error && (
+            <div className="alert alert-danger">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <input
@@ -60,15 +93,18 @@ function Login() {
             />
 
             <input
-              className="form-control mb-2"
+              className="form-control mb-3"
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button className="btn btn-primary w-100">
-              Login
+            <button
+              className="btn btn-primary w-100"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
         </div>

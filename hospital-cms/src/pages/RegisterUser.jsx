@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import MyNavbar from "../components/MyNavbar";
-import { registerDoctor } from "../services/adminApi";
 
-function RegisterDoctor() {
+function RegisterUser() {
   const [form, setForm] = useState({
-    name: "",
+    fullName: "",
+    age: "",
+    gender: "",
     email: "",
-    specialization: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
   });
 
@@ -18,23 +18,22 @@ function RegisterDoctor() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      await registerDoctor(form);
-      alert("Doctor registered successfully");
+    // This payload now matches Patient model exactly
+    console.log("REGISTER PATIENT:", form);
 
-      setForm({
-        name: "",
-        email: "",
-        specialization: "",
-        phone: "",
-        password: "",
-      });
-    } catch (err) {
-      alert(err.message || "Failed to register doctor");
-    }
+    alert("Patient registered successfully");
+
+    setForm({
+      fullName: "",
+      age: "",
+      gender: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+    });
   };
 
   return (
@@ -42,17 +41,41 @@ function RegisterDoctor() {
       <MyNavbar />
 
       <div className="container mt-4">
-        <h3>Register New Doctor</h3>
+        <h3>Patient Registration</h3>
 
         <form onSubmit={handleSubmit} className="col-md-6 mt-3">
+
           <input
             className="form-control mb-2"
-            name="name"
-            placeholder="Doctor Name"
-            value={form.name}
+            name="fullName"
+            placeholder="Full Name"
+            value={form.fullName}
             onChange={handleChange}
             required
           />
+
+          <input
+            className="form-control mb-2"
+            name="age"
+            type="number"
+            placeholder="Age"
+            value={form.age}
+            onChange={handleChange}
+            required
+          />
+
+          <select
+            className="form-control mb-2"
+            name="gender"
+            value={form.gender}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
 
           <input
             className="form-control mb-2"
@@ -66,34 +89,24 @@ function RegisterDoctor() {
 
           <input
             className="form-control mb-2"
-            name="specialization"
-            placeholder="Specialization"
-            value={form.specialization}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            className="form-control mb-2"
-            name="phone"
+            name="phoneNumber"
             placeholder="Phone Number"
-            value={form.phone}
+            value={form.phoneNumber}
             onChange={handleChange}
-            required
           />
 
           <input
             className="form-control mb-3"
             name="password"
             type="password"
-            placeholder="Temporary Password"
+            placeholder="Password"
             value={form.password}
             onChange={handleChange}
             required
           />
 
           <button className="btn btn-success w-100">
-            Register Doctor
+            Register Patient
           </button>
         </form>
       </div>
@@ -101,4 +114,4 @@ function RegisterDoctor() {
   );
 }
 
-export default RegisterDoctor;
+export default RegisterUser;
