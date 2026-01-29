@@ -1,127 +1,113 @@
-import React from 'react'; // ✅ THIS LINE FIXES THE WHITE SCREEN
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Page Imports
+/* PUBLIC */
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import RegisterUser from "./pages/RegisterUser.jsx";
-import RegisterDoctor from "./pages/RegisterDoctor.jsx";
 
-// Dashboard Imports
+/* DASHBOARDS */
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import DoctorDashboard from "./pages/DoctorDashboard.jsx";
 import PatientDashboard from "./pages/PatientDashboard.jsx";
 
-// Component Imports
+/* AUTH */
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
-// Patient Feature Imports
+/* ADMIN */
+import RegisterDoctor from "./pages/RegisterDoctor.jsx";
+import ViewAppointments from "./pages/admin/ViewAppointments.jsx";
+import ViewPatients from "./pages/admin/ViewPatients.jsx";
+import ViewDoctors from "./pages/admin/ViewDoctors.jsx";
+
+/* PATIENT */
 import DoctorSearch from "./pages/patient/DoctorSearch.jsx";
 import BookAppointment from "./pages/patient/BookAppointment.jsx";
 import AppointmentHistory from "./pages/patient/AppointmentHistory.jsx";
 import CurrentAppointment from "./pages/patient/CurrentAppointment.jsx";
 
-// Doctor Feature Imports
+/* DOCTOR */
 import ManageSlots from "./pages/doctor/ManageSlots.jsx";
-import DoctorAppointments from "./pages/doctor/DoctorAppointments";
-
+import DoctorAppointments from "./pages/doctor/DoctorAppointments.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC ROUTES */}
+        {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register-user" element={<RegisterUser />} />
-        <Route path="/register-doctor" element={<RegisterDoctor />} />
 
-        {/* PROTECTED ROUTES */}
-        
-        {/* Dashboards */}
+        {/* DASHBOARDS */}
         <Route
           path="/admin-dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}
         />
 
         <Route
           path="/doctor-dashboard"
-          element={
-            <ProtectedRoute>
-              <DoctorDashboard />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><DoctorDashboard /></ProtectedRoute>}
         />
 
         <Route
           path="/patient-dashboard"
-          element={
-            <ProtectedRoute>
-              <PatientDashboard />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><PatientDashboard /></ProtectedRoute>}
         />
 
-        {/* Patient Features */}
+        {/* ADMIN */}
+        <Route
+          path="/admin/register-doctor"
+          element={<ProtectedRoute><RegisterDoctor /></ProtectedRoute>}
+        />
+
+        <Route
+          path="/admin/appointments"
+          element={<ProtectedRoute><ViewAppointments /></ProtectedRoute>}
+        />
+
+        <Route
+          path="/admin/patients"
+          element={<ProtectedRoute><ViewPatients /></ProtectedRoute>}
+        />
+
+        <Route
+          path="/admin/doctors"
+          element={<ProtectedRoute><ViewDoctors /></ProtectedRoute>}
+        />
+
+        {/* PATIENT */}
         <Route
           path="/find-doctor"
-          element={
-            <ProtectedRoute>
-              <DoctorSearch />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><DoctorSearch /></ProtectedRoute>}
         />
 
         <Route
           path="/book-appointment"
-          element={
-            <ProtectedRoute>
-              <BookAppointment />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><BookAppointment /></ProtectedRoute>}
         />
-        
+
         <Route
           path="/patient-appointments"
-          element={
-            <ProtectedRoute>
-              <AppointmentHistory />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><AppointmentHistory /></ProtectedRoute>}
         />
-        
+
         <Route
           path="/current-appointment"
-          element={
-            <ProtectedRoute>
-              <CurrentAppointment />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><CurrentAppointment /></ProtectedRoute>}
         />
 
-        {/* Doctor Features */}
+        {/* DOCTOR */}
         <Route
           path="/doctor/manage-slots"
-          element={
-            <ProtectedRoute>
-              <ManageSlots />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><ManageSlots /></ProtectedRoute>}
         />
-        <Route
-  path="/doctor-appointments"
-  element={
-    <ProtectedRoute>
-      <DoctorAppointments />
-    </ProtectedRoute>
-  }
-/>
 
+        <Route
+          path="/doctor-appointments"
+          element={<ProtectedRoute><DoctorAppointments /></ProtectedRoute>}
+        />
 
       </Routes>
     </BrowserRouter>
